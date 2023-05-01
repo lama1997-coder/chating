@@ -10,12 +10,10 @@ class CustomButton extends StatelessWidget {
   final TextStyle? textStyle;
   final Color? appBarColor;
   final List<ChatBubble>? chatMessage;
-  var onPressed;
   final Widget child;
   var style;
   CustomButton(
       {Key? key,
-      @required this.onPressed,
       required this.child,
       this.header,
       this.chatMessage,
@@ -45,12 +43,34 @@ class CustomButton extends StatelessWidget {
                     style: textStyle ?? TextStyle(fontSize: 10),
                   ),
           ),
-      body: ListView.builder(
-        padding: EdgeInsets.all(20),
-        itemCount: chatMessage!.length,
-        itemBuilder: (context, index) {
-          return chatMessage![index];
-        },
+      body: Column(
+        children: [
+          Expanded(
+            child: ListView.builder(
+              padding: const EdgeInsets.all(20),
+              itemCount: chatMessage!.length,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                return chatMessage![index];
+              },
+            ),
+          ),
+          Container(
+            color: Colors.grey,
+            width: double.infinity,
+            child: Row(
+              children: [
+                Icon(Icons.share),
+                Expanded(
+                    child: TextFormField(
+                  decoration: InputDecoration(
+                      hintText: "write text", fillColor: Colors.white),
+                )),
+                Icon(Icons.send),
+              ],
+            ),
+          )
+        ],
       ),
     );
   }
